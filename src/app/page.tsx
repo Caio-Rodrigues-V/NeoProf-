@@ -115,6 +115,7 @@ export default function Home() {
   const [password, setPassword] = useState("123456");
   const [registerName, setRegisterName] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
   const [userRole, setUserRole] = useState<"mentorado" | "admin">("mentorado");
   const [userName, setUserName] = useState("João Silva");
   const [activeTab, setActiveTab] = useState<string>("dashboard");
@@ -204,6 +205,7 @@ export default function Home() {
   // Handle Logins via SQLite DB
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setAuthError(null);
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
@@ -212,7 +214,7 @@ export default function Home() {
       });
       if (!res.ok) {
         const data = await res.json();
-        alert(data.error || "Erro ao realizar login");
+        setAuthError(data.error || "Erro ao realizar login");
         return;
       }
       // Load user profile & persisted state
@@ -236,13 +238,14 @@ export default function Home() {
       }
     } catch (err) {
       console.error(err);
-      alert("Erro ao conectar com o servidor.");
+      setAuthError("Erro ao conectar com o servidor.");
     }
   };
 
   // Handle new mentorado signup/registration
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setAuthError(null);
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
@@ -251,7 +254,7 @@ export default function Home() {
       });
       if (!res.ok) {
         const data = await res.json();
-        alert(data.error || "Erro ao realizar cadastro");
+        setAuthError(data.error || "Erro ao realizar cadastro");
         return;
       }
       // Load newly registered user profile
@@ -277,7 +280,7 @@ export default function Home() {
       }
     } catch (err) {
       console.error(err);
-      alert("Erro ao conectar com o servidor.");
+      setAuthError("Erro ao conectar com o servidor.");
     }
   };
 
@@ -1073,6 +1076,7 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                   setIsRegistering(false);
                   setEmail("");
                   setPassword("");
+                  setAuthError(null);
                 }} 
                 className={`auth-tab-btn ${!isRegistering ? "active" : ""}`}
               >
@@ -1085,6 +1089,7 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                   setEmail("");
                   setPassword("");
                   setRegisterName("");
+                  setAuthError(null);
                 }} 
                 className={`auth-tab-btn ${isRegistering ? "active" : ""}`}
               >
@@ -1146,7 +1151,24 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                   />
                 </div>
               </div>
-
+              {authError && (
+                <div style={{
+                  padding: "0.75rem",
+                  background: "rgba(239, 68, 68, 0.12)",
+                  border: "1px solid rgba(239, 68, 68, 0.3)",
+                  borderRadius: "8px",
+                  color: "#f87171",
+                  fontSize: "0.8rem",
+                  fontWeight: "500",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  marginTop: "0.5rem"
+                }}>
+                  <span>⚠️</span>
+                  <span>{authError}</span>
+                </div>
+              )}
 
               <button type="submit" className="chat-send-btn" style={{ padding: "0.9rem", marginTop: "1rem", fontSize: "0.95rem", fontWeight: "700" }}>
                 {isRegistering ? "Criar Conta & Entrar" : "Entrar na Plataforma"}
