@@ -2217,7 +2217,14 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                         {submissions.filter(s => s.status !== "PENDING").map(sub => (
                           <tr key={sub.id}>
                             <td style={{ fontWeight: "600" }}>{sub.mentoradoName}</td>
-                            <td>{sub.taskTitle}</td>
+                            <td>
+                              <div>{sub.taskTitle}</div>
+                              {sub.status === "REJECTED" && sub.feedback && (
+                                <div style={{ fontSize: "0.75rem", color: "#f87171", marginTop: "0.25rem", opacity: 0.85 }}>
+                                  <strong>Motivo da IA:</strong> {sub.feedback}
+                                </div>
+                              )}
+                            </td>
                             <td>
                               <button 
                                 onClick={() => setPreviewEvidence({ title: sub.taskTitle, mentoradoName: sub.mentoradoName, evidenceUrl: sub.evidenceUrl, submittedAt: sub.submittedAt, note: sub.note })} 
@@ -2283,6 +2290,11 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                           <span className="card-label">Tarefa:</span>
                           <span className="card-value" style={{ textAlign: "right" }}>{sub.taskTitle}</span>
                         </div>
+                        {sub.status === "REJECTED" && sub.feedback && (
+                          <div style={{ padding: "0.5rem", background: "rgba(239, 68, 68, 0.05)", border: "1px solid rgba(239, 68, 68, 0.15)", borderRadius: "6px", fontSize: "0.75rem", color: "#f87171", margin: "0.5rem 0" }}>
+                            <strong>Motivo da IA:</strong> {sub.feedback}
+                          </div>
+                        )}
                         <div className="card-row-info">
                           <span className="card-label">Status:</span>
                           <span className="card-value">

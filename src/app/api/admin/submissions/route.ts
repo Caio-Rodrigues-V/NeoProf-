@@ -31,7 +31,20 @@ export async function GET(req: Request) {
       orderBy: { submittedAt: "desc" }
     });
 
-    return NextResponse.json({ submissions });
+    const submissionsWithFeedback = await Promise.all(
+      submissions.map(async (sub) => {
+        const userTask = await prisma.userTask.findFirst({
+          where: { userId: sub.userId, taskId: sub.taskId },
+          select: { feedback: true }
+        });
+        return {
+          ...sub,
+          feedback: userTask?.feedback || null
+        };
+      })
+    );
+
+    return NextResponse.json({ submissions: submissionsWithFeedback });
 
   } catch (error: any) {
     console.error("Erro ao carregar submissões:", error);

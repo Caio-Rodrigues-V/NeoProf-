@@ -22,6 +22,7 @@ export interface Submission {
   submittedAt: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED';
   note?: string;
+  feedback?: string;
 }
 
 export interface ChatMessage {
