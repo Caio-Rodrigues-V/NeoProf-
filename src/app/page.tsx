@@ -117,6 +117,7 @@ export default function Home() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [userRole, setUserRole] = useState<"mentorado" | "admin">("mentorado");
+  const [realUserRole, setRealUserRole] = useState<"mentorado" | "admin">("mentorado");
   const [userName, setUserName] = useState("João Silva");
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [currentPhaseId, setCurrentPhaseId] = useState<number>(1);
@@ -182,6 +183,7 @@ export default function Home() {
           const data = await res.json();
           setIsLoggedIn(true);
           setUserRole(data.user.role);
+          setRealUserRole(data.user.role);
           setUserName(data.user.name);
           setActiveTab(data.user.role === "admin" ? "admin" : "dashboard");
           setTasks(data.tasks);
@@ -223,6 +225,7 @@ export default function Home() {
         const meData = await meRes.json();
         setIsLoggedIn(true);
         setUserRole(meData.user.role);
+        setRealUserRole(meData.user.role);
         setUserName(meData.user.name);
         setActiveTab(meData.user.role === "admin" ? "admin" : "dashboard");
         setTasks(meData.tasks);
@@ -263,6 +266,7 @@ export default function Home() {
         const meData = await meRes.json();
         setIsLoggedIn(true);
         setUserRole(meData.user.role);
+        setRealUserRole(meData.user.role);
         setUserName(meData.user.name);
         setActiveTab("dashboard");
         setTasks(meData.tasks);
@@ -289,6 +293,8 @@ export default function Home() {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
       setIsLoggedIn(false);
+      setUserRole("mentorado");
+      setRealUserRole("mentorado");
       setActiveTab("dashboard");
     } catch (err) {
       console.error(err);
@@ -1277,21 +1283,23 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
             </div>
           </div>
 
-          <button 
-            onClick={() => {
-              const newRole = userRole === "mentorado" ? "admin" : "mentorado";
-              setUserRole(newRole);
-              setIsMobileMenuOpen(false);
-              if (newRole === "admin") {
-                setActiveTab("admin");
-              } else {
-                setActiveTab("dashboard");
-              }
-            }} 
-            className="toggle-role-btn"
-          >
-            🔄 Alternar Perfil ({userRole === "mentorado" ? "Ver como Admin" : "Ver como Aluno"})
-          </button>
+          {realUserRole === "admin" && (
+            <button 
+              onClick={() => {
+                const newRole = userRole === "mentorado" ? "admin" : "mentorado";
+                setUserRole(newRole);
+                setIsMobileMenuOpen(false);
+                if (newRole === "admin") {
+                  setActiveTab("admin");
+                } else {
+                  setActiveTab("dashboard");
+                }
+              }} 
+              className="toggle-role-btn"
+            >
+              🔄 Alternar Perfil ({userRole === "mentorado" ? "Ver como Admin" : "Ver como Aluno"})
+            </button>
+          )}
           
           <button 
             onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }}
