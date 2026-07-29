@@ -346,7 +346,7 @@ export default function Home() {
     
     // Conceptual / Strategy tasks can be submitted as text, print, or both
     const textFriendlyIds = ["t1", "t2", "t5", "t6", "t7", "t16", "t20"];
-    const isTextFriendly = textFriendlyIds.includes(selectedTaskUpload.taskId) || textFriendlyIds.includes(selectedTaskUpload.id);
+    const isTextFriendly = textFriendlyIds.includes(selectedTaskUpload.taskId || "") || textFriendlyIds.includes(selectedTaskUpload.id);
 
     if (isTextFriendly) {
       if (!finalUrl.trim() && !noteText.trim()) {
@@ -2409,7 +2409,7 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
             <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "1.5rem" }}>
               <div>
                 <label style={{ fontSize: "0.85rem", fontWeight: "600", color: "var(--text-primary)", display: "block", marginBottom: "0.5rem" }}>
-                  {["t1", "t2", "t5", "t6", "t7", "t16", "t20"].includes(selectedTaskUpload.taskId) || ["t1", "t2", "t5", "t6", "t7", "t16", "t20"].includes(selectedTaskUpload.id)
+                  {["t1", "t2", "t5", "t6", "t7", "t16", "t20"].includes(selectedTaskUpload.taskId || "") || ["t1", "t2", "t5", "t6", "t7", "t16", "t20"].includes(selectedTaskUpload.id)
                     ? "✍️ Rascunho do Trabalho / Observação (Texto):"
                     : "✍️ Observação ou mensagem para o Mentor Gleyson (Opcional):"}
                 </label>

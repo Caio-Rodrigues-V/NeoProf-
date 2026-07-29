@@ -2,6 +2,7 @@ export type TaskStatus = 'NOT_STARTED' | 'PENDING_APPROVAL' | 'APPROVED' | 'REJE
 
 export interface Task {
   id: string;
+  taskId?: string;
   phaseId: number;
   title: string;
   description: string;
