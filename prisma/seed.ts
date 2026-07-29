@@ -42,7 +42,7 @@ const TASK_TEMPLATES = [
 ];
 
 async function main() {
-  console.log("Iniciando sementeira (seed)...");
+  console.log("Iniciando sementeira limpa (seed)...");
 
   // Clean database
   await prisma.submission.deleteMany();
@@ -51,97 +51,18 @@ async function main() {
 
   const hashedPassword = await bcrypt.hash("123456", 10);
 
-  // 1. Create João Silva (Mentorado)
-  const joao = await prisma.user.create({
-    data: {
-      email: "joao@email.com",
-      name: "João Silva",
-      password: hashedPassword,
-      role: "mentorado",
-      revenue: 1250.0
-    }
-  });
-
-  // Create tasks for João Silva
-  for (const template of TASK_TEMPLATES) {
-    await prisma.userTask.create({
-      data: {
-        userId: joao.id,
-        taskId: template.id,
-        title: template.title,
-        description: template.description,
-        phaseId: template.phaseId,
-        status: template.status,
-        evidenceType: template.evidenceType
-      }
-    });
-  }
-
-  // 2. Create Gleyson Lima (Admin / Mentor)
+  // 1. Create Gleyson Lima (Admin / Mentor)
   await prisma.user.create({
     data: {
       email: "gleyson@email.com",
       name: "Gleyson Lima",
       password: hashedPassword,
       role: "admin",
-      revenue: 154300.0
-    }
-  });
-
-  // 3. Create mock users for Ranking
-  await prisma.user.create({
-    data: {
-      email: "maria@email.com",
-      name: "Maria Clara",
-      password: hashedPassword,
-      role: "mentorado",
-      revenue: 42500.0
-    }
-  });
-
-  await prisma.user.create({
-    data: {
-      email: "pedro@email.com",
-      name: "Pedro Henrique",
-      password: hashedPassword,
-      role: "mentorado",
-      revenue: 18200.0
-    }
-  });
-
-  await prisma.user.create({
-    data: {
-      email: "ana@email.com",
-      name: "Ana Beatriz",
-      password: hashedPassword,
-      role: "mentorado",
       revenue: 0.0
     }
   });
 
-  // 4. Create initial pending submissions
-  const sub1Task = await prisma.userTask.findFirst({ where: { userId: joao.id, taskId: "t2" } });
-  if (sub1Task) {
-    // Mark t2 as pending approval for Joao
-    await prisma.userTask.update({
-      where: { id: sub1Task.id },
-      data: { status: "PENDING_APPROVAL", evidenceUrl: "say_wallahibro.png" }
-    });
-
-    await prisma.submission.create({
-      data: {
-        userId: joao.id,
-        mentoradoName: "João Silva",
-        taskId: "t2",
-        taskTitle: "ICP (Cliente Ideal) definido e aprovado",
-        evidenceUrl: "say_wallahibro.png",
-        submittedAt: new Date().toLocaleDateString("pt-BR") + " 14:36",
-        status: "PENDING"
-      }
-    });
-  }
-
-  console.log("Sementeira finalizada com sucesso!");
+  console.log("Sementeira limpa finalizada com sucesso!");
 }
 
 main()

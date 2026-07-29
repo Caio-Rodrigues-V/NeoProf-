@@ -1147,13 +1147,6 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                 </div>
               </div>
 
-              {!isRegistering && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.8rem", color: "var(--text-secondary)", borderTop: "1px solid var(--border-color)", paddingTop: "1rem", marginTop: "0.5rem" }}>
-                  <span style={{ fontWeight: "600" }}>Acessos Rápidos de Teste:</span>
-                  <button type="button" onClick={() => { setEmail("joao@email.com"); setPassword("123456"); }} style={{ background: "none", border: "none", color: "var(--primary)", cursor: "pointer", textAlign: "left", fontSize: "0.8rem", textDecoration: "underline" }}>👉 Logar como Mentorado (joao@email.com)</button>
-                  <button type="button" onClick={() => { setEmail("gleyson@email.com"); setPassword("123456"); }} style={{ background: "none", border: "none", color: "var(--accent)", cursor: "pointer", textAlign: "left", fontSize: "0.8rem", textDecoration: "underline" }}>👉 Logar como Mentor Gleyson (gleyson@email.com)</button>
-                </div>
-              )}
 
               <button type="submit" className="chat-send-btn" style={{ padding: "0.9rem", marginTop: "1rem", fontSize: "0.95rem", fontWeight: "700" }}>
                 {isRegistering ? "Criar Conta & Entrar" : "Entrar na Plataforma"}
