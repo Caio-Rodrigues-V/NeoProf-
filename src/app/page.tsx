@@ -1261,7 +1261,7 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                   onClick={() => { setActiveTab("admin"); setIsMobileMenuOpen(false); }} 
                   className={`menu-item-btn ${activeTab === "admin" ? "active" : ""}`}
                 >
-                  🛡️ Painel Admin (Gleyson)
+                  🛡️ Painel Admin
                 </button>
               </li>
             )}
@@ -1655,7 +1655,7 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                                 title: task.title,
                                 mentoradoName: "João Silva",
                                 evidenceUrl: task.evidenceUrl || "",
-                                submittedAt: "Aguardando Mentor Gleyson",
+                                submittedAt: "Aguardando Mentor",
                                 note: task.note
                               })}
                               className="evidence-link"
@@ -2446,7 +2446,7 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                 <label style={{ fontSize: "0.85rem", fontWeight: "600", color: "var(--text-primary)", display: "block", marginBottom: "0.5rem" }}>
                   {["t1", "t2", "t5", "t6", "t7", "t16", "t20"].includes(selectedTaskUpload.taskId || "") || ["t1", "t2", "t5", "t6", "t7", "t16", "t20"].includes(selectedTaskUpload.id)
                     ? "✍️ Rascunho do Trabalho / Observação (Texto):"
-                    : "✍️ Observação ou mensagem para o Mentor Gleyson (Opcional):"}
+                    : "✍️ Observação ou mensagem para o Mentor (Opcional):"}
                 </label>
                 
                 <textarea
