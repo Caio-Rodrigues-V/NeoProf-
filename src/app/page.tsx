@@ -1389,18 +1389,19 @@ Você pode me ajudar a melhorar meu texto e modelar melhor essa história ou ide
                           border: alert.type === "warning" ? "1px solid rgba(239, 68, 68, 0.2)" : alert.type === "success" ? "1px solid rgba(34, 197, 94, 0.2)" : "1px solid rgba(59, 130, 246, 0.2)",
                           fontSize: "0.85rem",
                           display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center"
+                          flexDirection: "column",
+                          gap: "0.75rem",
+                          alignItems: "stretch"
                         }}
                       >
                         <div>
-                          <strong style={{ color: alert.type === "warning" ? "var(--error)" : alert.type === "success" ? "var(--success)" : "var(--primary)", display: "block", marginBottom: "0.15rem" }}>
+                          <strong style={{ color: alert.type === "warning" ? "var(--error)" : alert.type === "success" ? "var(--success)" : "var(--primary)", display: "block", marginBottom: "0.25rem" }}>
                             {alert.title}
                           </strong>
-                          <span style={{ color: "var(--text-secondary)" }}>{alert.desc}</span>
+                          <span style={{ color: "var(--text-secondary)", lineHeight: "1.4" }}>{alert.desc}</span>
                         </div>
                         {alert.taskId && (
-                          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", justifyContent: "flex-end", flexWrap: "wrap", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "0.5rem" }}>
                             {alert.type === "warning" && (
                               <button 
                                 onClick={() => {
